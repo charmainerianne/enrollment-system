@@ -1,0 +1,61 @@
+@model EnrollmentSystem.Models.Student
+
+@{
+    ViewBag.Title = "Student Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Student Details</h2>
+
+<div>
+    <h4>@Model.FirstName @Model.MiddleInitial @Model.LastName</h4>
+    <hr />
+    <dl>
+        <dt>Student ID</dt>
+        <dd>@Model.StudentId</dd>
+
+        <dt>Year Level</dt>
+        <dd>@Model.YearLevel</dd>
+
+        <dt>Program</dt>
+        <dd>@Model.Program</dd>
+
+        <dt>Student Type</dt>
+        <dd>@Model.StudentType.ToString()</dd>
+
+        <dt>Enrollment Status</dt>
+        <dd>@Model.EnrollmentStatus</dd>
+    </dl>
+</div>
+
+<h3>Enrolled Courses</h3>
+
+@if (Model.Enrollments != null && Model.Enrollments.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Course Title</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var enrollment in Model.Enrollments)
+            {
+                <tr>
+                    <td>@enrollment.Course.CourseName</td>
+                    <td>@enrollment.EnrollStatus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No courses enrolled.</p>
+}
+
+<p>
+    <a href="@Url.Action("Index")" class="btn">Back to List</a>
+    <a href="@Url.Action("Create", "Enrollment", new { studentId = Model.StudentId })" class="btn">Enroll in Courses</a>
+</p>
