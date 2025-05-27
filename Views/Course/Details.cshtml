@@ -1,0 +1,53 @@
+@model EnrollmentSystem.Models.Course
+
+@{
+    ViewBag.Title = "Course Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Course Details</h2>
+
+<div>
+    <h4>@Model.Title</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Credits</dt>
+        <dd>@Model.Credits</dd>
+
+        <dt>Prerequisite</dt>
+        <dd>@(Model.PrerequisiteCourse != null ? Model.PrerequisiteCourse.Title : "None")</dd>
+    </dl>
+</div>
+
+<h3>Schedules</h3>
+
+@if (Model.Schedules != null && Model.Schedules.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var schedule in Model.Schedules)
+            {
+                <tr>
+                    <td>@schedule.Day</td>
+                    <td>@schedule.StartTime.ToString(@"hh\:mm")</td>
+                    <td>@schedule.EndTime.ToString(@"hh\:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No schedules available.</p>
+}
+
+<p>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+</p>
