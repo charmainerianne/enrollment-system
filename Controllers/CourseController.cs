@@ -7,11 +7,11 @@ namespace EnrollmentSystem.Controllers
 {
     public class CourseController : Controller
     {
-        private readonly EnrollmentContextLegacy _context;
+        private readonly EnrollmentContext _context;
 
-        public CourseController()
+        public CourseController(EnrollmentContext context)
         {
-            _context = new EnrollmentContextLegacy();
+            _context = context;
         }
 
         // GET: Course
