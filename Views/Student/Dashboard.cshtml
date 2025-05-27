@@ -1,0 +1,23 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Student Dashboard";
+}
+
+<div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded shadow-md">
+    <h1 class="text-3xl font-bold mb-6 text-[#2ecc71]">Welcome, @Model.FirstName!</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a href="/Enrollment/Index" class="block p-6 bg-[#2ecc71] text-white rounded shadow hover:bg-[#27ae60] transition text-center">
+            <i class="fas fa-book-open fa-2x mb-2"></i>
+            <h2 class="text-xl font-semibold">Enroll</h2>
+        </a>
+        <a href="/Schedule/Index" class="block p-6 bg-[#f1c40f] text-[#2d3436] rounded shadow hover:bg-yellow-400 transition text-center">
+            <i class="fas fa-calendar-alt fa-2x mb-2"></i>
+            <h2 class="text-xl font-semibold">View Schedule</h2>
+        </a>
+        <a href="/Student/Edit/@Model.StudentId" class="block p-6 bg-[#2ecc71] text-white rounded shadow hover:bg-[#27ae60] transition text-center">
+            <i class="fas fa-user-edit fa-2x mb-2"></i>
+            <h2 class="text-xl font-semibold">Edit Profile</h2>
+        </a>
+    </div>
+</div>
