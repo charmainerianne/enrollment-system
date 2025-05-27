@@ -7,11 +7,12 @@ namespace EnrollmentSystem.Controllers
 {
     public class ScheduleController : Controller
     {
-        private readonly EnrollmentContextLegacy _context;
+        private readonly EnrollmentContext _context;
 
-        public ScheduleController()
+        // Constructor with dependency injection
+        public ScheduleController(EnrollmentContext context)
         {
-            _context = new EnrollmentContextLegacy();
+            _context = context;
         }
 
         // GET: Schedule
