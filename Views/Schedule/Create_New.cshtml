@@ -1,0 +1,53 @@
+@model EnrollmentSystem.Models.Schedule
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Create Schedule";
+}
+
+<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
+    <h2 class="text-2xl font-bold mb-6 text-[#2ecc71]">Create Schedule</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="mb-4">
+            @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.DropDownListFor(model => model.CourseId, new SelectList(ViewBag.Courses, "CourseId", "CourseName"), "Select Course", new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-red-600" })
+        </div>
+
+        <div class="mb-4">
+            @Html.LabelFor(model => model.RoomId, htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.DropDownListFor(model => model.RoomId, new SelectList(ViewBag.Rooms, "RoomId", "RoomName"), "Select Room", new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessageFor(model => model.RoomId, "", new { @class = "text-red-600" })
+        </div>
+
+        <div class="mb-4">
+            @Html.LabelFor(model => model.InstructorId, htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.DropDownListFor(model => model.InstructorId, new SelectList(ViewBag.Instructors, "InstructorId", "FullName"), "Select Instructor", new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessageFor(model => model.InstructorId, "", new { @class = "text-red-600" })
+        </div>
+
+        <div class="mb-4">
+            @Html.LabelFor(model => model.SemesterYearId, htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.DropDownListFor(model => model.SemesterYearId, new SelectList(ViewBag.SemesterYears, "SemesterYearId", "Year"), "Select Semester/Year", new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessageFor(model => model.SemesterYearId, "", new { @class = "text-red-600" })
+        </div>
+
+        <div class="mb-4">
+            @Html.LabelFor(model => model.Day, htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.TextBoxFor(model => model.Day, new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-red-600" })
+        </div>
+
+        <div class="mb-4">
+            @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.TextBoxFor(model => model.Time, new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-red-600" })
+        </div>
+
+        <button type="submit" class="bg-[#2ecc71] hover:bg-[#27ae60] text-white font-bold py-2 px-4 rounded transition">Create</button>
+    }
+</div>
