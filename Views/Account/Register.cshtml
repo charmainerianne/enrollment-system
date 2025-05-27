@@ -1,0 +1,69 @@
+@model EnrollmentSystem.Models.Student
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.StudentId)
+        @Html.TextBoxFor(m => m.StudentId, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.StudentId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FirstName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.MiddleInitial)
+        @Html.TextBoxFor(m => m.MiddleInitial, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MiddleInitial)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName)
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.LastName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Birthday)
+        @Html.TextBoxFor(m => m.Birthday, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+        @Html.ValidationMessageFor(m => m.Birthday)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.YearLevel)
+        @Html.TextBoxFor(m => m.YearLevel, new { @class = "form-control", type = "number", min = "1" })
+        @Html.ValidationMessageFor(m => m.YearLevel)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Program)
+        @Html.TextBoxFor(m => m.Program, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Program)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.StudentType)
+        @Html.DropDownListFor(m => m.StudentType, new SelectList(Enum.GetValues(typeof(EnrollmentSystem.Models.StudentType))), "Select Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.StudentType)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+}
