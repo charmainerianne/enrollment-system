@@ -1,0 +1,28 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Login";
+}
+
+<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
+    <h2 class="text-2xl font-bold mb-6 text-[#2ecc71]">Login</h2>
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="mb-4">
+            @Html.Label("User ID", htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.TextBox("userId", null, new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessage("UserId", "", new { @class = "text-red-600" })
+        </div>
+        <div class="mb-4">
+            @Html.Label("Password", htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.Password("password", null, new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessage("Password", "", new { @class = "text-red-600" })
+        </div>
+        <div class="mb-4">
+            @Html.Label("User Type", htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.DropDownList("userType", new SelectList(new[] { "Student", "Admin" }), "Select User Type", new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessage("UserType", "", new { @class = "text-red-600" })
+        </div>
+        <button type="submit" class="bg-[#2ecc71] hover:bg-[#27ae60] text-white font-bold py-2 px-4 rounded transition">Login</button>
+    }
+</div>
