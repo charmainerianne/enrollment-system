@@ -1,74 +1,33 @@
 @model EnrollmentSystem.Models.Enrollment
 
 @{
-    ViewData["Title"] = "Create Enrollment";
+    ViewBag.Title = "Create Enrollment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Create Enrollment</h2>
 
-<form asp-action="Create" method="post" id="enrollmentForm">
-    <div class="mb-4">
-        <label for="year" class="block font-semibold mb-1">Year</label>
-        <select id="year" name="year" class="w-full border border-gray-300 rounded px-3 py-2" required>
-            <option value="">Select Year</option>
-            @foreach (var year in ViewBag.Years as List<int>)
-            {
-                <option value="@year">@year</option>
-            }
-        </select>
-    </div>
-    <div class="mb-4">
-        <label for="semester" class="block font-semibold mb-1">Semester</label>
-        <select id="semester" name="semester" class="w-full border border-gray-300 rounded px-3 py-2" required>
-            <option value="">Select Semester</option>
-            @foreach (var semester in ViewBag.Semesters as List<int>)
-            {
-                <option value="@semester">@semester</option>
-            }
-        </select>
-    </div>
-    <div class="mb-4">
-        <label for="courseId" class="block font-semibold mb-1">Course</label>
-        <select id="courseId" name="courseId" class="w-full border border-gray-300 rounded px-3 py-2" required>
-            <option value="">Select Course</option>
-        </select>
-    </div>
-    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
-        Enroll
-    </button>
-</form>
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
 
-@section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            function loadCourses() {
-                var year = $('#year').val();
-                var semester = $('#semester').val();
-                if (year && semester) {
-                    $.ajax({
-                        url: '@Url.Action("GetCourses", "Enrollment")',
-                        type: 'POST',
-                        data: { year: year, semester: semester },
-                        success: function (response) {
-                            var courseSelect = $('#courseId');
-                            courseSelect.empty();
-                            courseSelect.append($('<option>').val('').text('Select Course'));
-                            if (response.success) {
-                                $.each(response.courses, function (i, course) {
-                                    courseSelect.append($('<option>').val(course.courseId).text(course.title));
-                                });
-                            } else {
-                                alert(response.message);
-                            }
-                        }
-                    });
-                }
-            }
+    <div class="form-group">
+        @Html.LabelFor(model => model.StudentId)
+        @Html.DropDownListFor(model => model.StudentId, (SelectList)ViewData["Students"], "Select Student", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.StudentId)
+    </div>
 
-            $('#year, #semester').change(function () {
-                loadCourses();
-            });
-        });
-    </script>
+    <div class="form-group">
+        @Html.LabelFor(model => model.CourseId)
+        @Html.DropDownListFor(model => model.CourseId, (SelectList)ViewData["Courses"], "Select Course", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CourseId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SemesterYearId)
+        @Html.DropDownListFor(model => model.SemesterYearId, (SelectList)ViewData["SemesterYears"], "Select Semester/Year", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.SemesterYearId)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
 }
