@@ -7,10 +7,10 @@ namespace EnrollmentSystem.Controllers
 {
     public class EnrollmentController : Controller
     {
-        private readonly EnrollmentContextLegacy _context;
+        private readonly EnrollmentContext _context;
 
         // Constructor with dependency injection
-        public EnrollmentController(EnrollmentContextLegacy context)
+        public EnrollmentController(EnrollmentContext context)
         {
             _context = context;
         }
