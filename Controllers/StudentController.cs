@@ -7,11 +7,11 @@ namespace EnrollmentSystem.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly EnrollmentContextLegacy _context;
+        private readonly EnrollmentContext _context;
 
-        public StudentController()
+        public StudentController(EnrollmentContext context)
         {
-            _context = new EnrollmentContextLegacy();
+            _context = context;
         }
 
         // GET: Student
