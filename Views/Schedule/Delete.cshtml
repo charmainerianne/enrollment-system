@@ -1,0 +1,37 @@
+@model EnrollmentSystem.Models.Schedule
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Delete Schedule";
+}
+
+<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
+    <h2 class="text-2xl font-bold mb-6 text-red-600">Delete Schedule</h2>
+
+    <div class="mb-4">
+        <strong>Course:</strong> @Model.Course?.CourseName
+    </div>
+    <div class="mb-4">
+        <strong>Room:</strong> @Model.Room?.RoomName
+    </div>
+    <div class="mb-4">
+        <strong>Instructor:</strong> @Model.Instructor?.FullName
+    </div>
+    <div class="mb-4">
+        <strong>Semester/Year:</strong> @Model.SemesterYear?.Year
+    </div>
+    <div class="mb-4">
+        <strong>Day:</strong> @Model.Day
+    </div>
+    <div class="mb-4">
+        <strong>Time:</strong> @Model.Time
+    </div>
+
+    @using (Html.BeginForm("DeleteConfirmed", "Schedule", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.ScheduleId)
+        <button type="submit" class="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded transition">Delete</button>
+        <a href="/Schedule/Index" class="ml-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition">Cancel</a>
+    }
+</div>
