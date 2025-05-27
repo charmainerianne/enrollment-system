@@ -5,13 +5,14 @@ using EnrollmentSystem.Models;
 
 namespace EnrollmentSystem.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
-        private readonly EnrollmentContextLegacy _context;
+        private readonly EnrollmentContext _context;
 
-        public AdminController()
+        public AdminController(EnrollmentContext context)
         {
-            _context = new EnrollmentContextLegacy();
+            _context = context;
         }
 
         // GET: Admin/Statistics
