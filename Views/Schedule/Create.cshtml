@@ -1,0 +1,150 @@
+@model EnrollmentSystem.Models.Schedule
+
+@{
+    ViewBag.Title = "Create Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var daysOfWeek = ViewBag.DaysOfWeek as List<string> ?? new List<string> { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+    var courses = ViewBag.Courses as List<EnrollmentSystem.Models.Course> ?? new List<EnrollmentSystem.Models.Course>();
+}
+
+<h2>Create Schedule</h2>
+
+@using (Html.BeginForm("Create", "Schedule", FormMethod.Post, new { id = "scheduleForm" }))
+{
+    <div class="form-group">
+        @Html.Label("Course")
+        @Html.DropDownList("CourseId", new SelectList(courses, "CourseId", "Title"), "Select Course", new { @class = "form-control", required = "required" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Day")
+        @Html.DropDownList("Day", new SelectList(daysOfWeek), "Select Day", new { @class = "form-control", required = "required" })
+    </div>
+
+    <div class="form-group">
+        <label for="startTime">Start Time</label>
+        <select id="startTime" name="StartTime" class="form-control" required disabled>
+            <option value="">Select Start Time</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="endTime">End Time</label>
+        <select id="endTime" name="EndTime" class="form-control" required disabled>
+            <option value="">Select End Time</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-warning">Add Schedule</button>
+}
+
+<h3 class="mt-4">Schedule Details</h3>
+<table class="table table-bordered table-striped mt-2">
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Day</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="scheduleDetailsBody">
+        <!-- Schedule rows will be dynamically added here -->
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var availableTimes = {
+            "Monday": ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00"],
+            "Tuesday": ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00"],
+            "Wednesday": ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00"],
+            "Thursday": ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00"],
+            "Friday": ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00"],
+            "Saturday": ["08:00", "09:00", "10:00", "11:00"],
+            "Sunday": []
+        };
+
+        function populateStartTimes(day) {
+            var startTimeSelect = $('#startTime');
+            startTimeSelect.empty();
+            startTimeSelect.append($('<option>').val('').text('Select Start Time'));
+            if (availableTimes[day]) {
+                $.each(availableTimes[day], function (i, time) {
+                    startTimeSelect.append($('<option>').val(time).text(time));
+                });
+                startTimeSelect.prop('disabled', false);
+            } else {
+                startTimeSelect.prop('disabled', true);
+            }
+            $('#endTime').empty().append($('<option>').val('').text('Select End Time')).prop('disabled', true);
+        }
+
+        function populateEndTimes(startTime) {
+            var day = $('#day').val();
+            var endTimeSelect = $('#endTime');
+            endTimeSelect.empty();
+            endTimeSelect.append($('<option>').val('').text('Select End Time'));
+            if (day && startTime && availableTimes[day]) {
+                var startIndex = availableTimes[day].indexOf(startTime);
+                if (startIndex >= 0) {
+                    for (var i = startIndex + 1; i < availableTimes[day].length; i++) {
+                        endTimeSelect.append($('<option>').val(availableTimes[day][i]).text(availableTimes[day][i]));
+                    }
+                    endTimeSelect.prop('disabled', false);
+                } else {
+                    endTimeSelect.prop('disabled', true);
+                }
+            } else {
+                endTimeSelect.prop('disabled', true);
+            }
+        }
+
+        $('#day').change(function () {
+            var day = $(this).val();
+            populateStartTimes(day);
+        });
+
+        $('#startTime').change(function () {
+            var startTime = $(this).val();
+            populateEndTimes(startTime);
+        });
+
+        // Function to add schedule row to the table
+        $('#scheduleForm').submit(function (e) {
+            e.preventDefault();
+
+            var courseId = $('#courseId').val();
+            var courseText = $('#courseId option:selected').text();
+            var day = $('#day').val();
+            var startTime = $('#startTime').val();
+            var endTime = $('#endTime').val();
+
+            if (!courseId || !day || !startTime || !endTime) {
+                alert('Please fill all fields.');
+                return;
+            }
+
+            // Add row to schedule details table
+            var row = $('<tr>');
+            row.append($('<td>').text(courseText));
+            row.append($('<td>').text(day));
+            row.append($('<td>').text(startTime));
+            row.append($('<td>').text(endTime));
+            var removeBtn = $('<button>').text('Remove').addClass('text-danger').click(function () {
+                $(this).closest('tr').remove();
+            });
+            row.append($('<td>').append(removeBtn));
+
+            $('#scheduleDetailsBody').append(row);
+
+            // Clear form fields
+            $('#courseId').val('');
+            $('#day').val('');
+            $('#startTime').empty().append($('<option>').val('').text('Select Start Time')).prop('disabled', true);
+            $('#endTime').empty().append($('<option>').val('').text('Select End Time')).prop('disabled', true);
+        });
+    </script>
+}
