@@ -1,0 +1,43 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Register";
+}
+
+<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
+    <h2 class="text-2xl font-bold mb-6 text-[#2ecc71]">Register</h2>
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="mb-4">
+            @Html.LabelFor(model => model.StudentId, htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.TextBoxFor(model => model.StudentId, new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessageFor(model => model.StudentId, "", new { @class = "text-red-600" })
+        </div>
+        <div class="mb-4">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-red-600" })
+        </div>
+        <div class="mb-4">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.TextBoxFor(model => model.LastName, new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-red-600" })
+        </div>
+        <div class="mb-4">
+            @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.TextBoxFor(model => model.Birthday, "{0:yyyy-MM-dd}", new { @type = "date", @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-red-600" })
+        </div>
+        <div class="mb-4">
+            @Html.LabelFor(model => model.YearLevel, htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.TextBoxFor(model => model.YearLevel, new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessageFor(model => model.YearLevel, "", new { @class = "text-red-600" })
+        </div>
+        <div class="mb-4">
+            @Html.LabelFor(model => model.Program, htmlAttributes: new { @class = "block text-[#2d3436] font-semibold mb-2" })
+            @Html.TextBoxFor(model => model.Program, new { @class = "w-full p-2 border border-gray-300 rounded" })
+            @Html.ValidationMessageFor(model => model.Program, "", new { @class = "text-red-600" })
+        </div>
+        <button type="submit" class="bg-[#2ecc71] hover:bg-[#27ae60] text-white font-bold py-2 px-4 rounded transition">Register</button>
+    }
+</div>
