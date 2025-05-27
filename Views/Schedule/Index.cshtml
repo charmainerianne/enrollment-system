@@ -1,0 +1,45 @@
+@model IEnumerable<EnrollmentSystem.Models.Schedule>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Schedules";
+}
+
+<div class="max-w-6xl mx-auto mt-10 p-6 bg-white rounded shadow-md">
+    <h1 class="text-3xl font-bold mb-6 text-[#2ecc71]">Schedules</h1>
+
+    <a href="/Schedule/Create" class="inline-block mb-4 bg-[#2ecc71] hover:bg-[#27ae60] text-white font-bold py-2 px-4 rounded transition">
+        <i class="fas fa-plus mr-2"></i> New Schedule
+    </a>
+
+    <table class="min-w-full border border-gray-300 rounded">
+        <thead class="bg-[#f1c40f] text-[#2d3436]">
+            <tr>
+                <th class="py-2 px-4 border-b border-gray-300">Course</th>
+                <th class="py-2 px-4 border-b border-gray-300">Room</th>
+                <th class="py-2 px-4 border-b border-gray-300">Instructor</th>
+                <th class="py-2 px-4 border-b border-gray-300">Semester/Year</th>
+                <th class="py-2 px-4 border-b border-gray-300">Day</th>
+                <th class="py-2 px-4 border-b border-gray-300">Time</th>
+                <th class="py-2 px-4 border-b border-gray-300">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var schedule in Model)
+            {
+                <tr class="hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b border-gray-300">@schedule.Course?.CourseName</td>
+                    <td class="py-2 px-4 border-b border-gray-300">@schedule.Room?.RoomName</td>
+                    <td class="py-2 px-4 border-b border-gray-300">@schedule.Instructor?.FullName</td>
+                    <td class="py-2 px-4 border-b border-gray-300">@schedule.SemesterYear?.Year</td>
+                    <td class="py-2 px-4 border-b border-gray-300">@schedule.Day</td>
+                    <td class="py-2 px-4 border-b border-gray-300">@schedule.Time</td>
+                    <td class="py-2 px-4 border-b border-gray-300">
+                        <a href="/Schedule/Edit/@schedule.ScheduleId" class="text-[#f1c40f] hover:text-yellow-500 mr-4">Edit</a>
+                        <a href="/Schedule/Delete/@schedule.ScheduleId" class="text-red-600 hover:text-red-800">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
